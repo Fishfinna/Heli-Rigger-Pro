@@ -1,0 +1,13 @@
+weight in pounds
+set the wood to customized also enter custom
+cone use di not r
+frustum
+##heli rigger pro##
+
+also do the trucated hollow
+
+top and buttom in cm
+height in meters
+
+
+they could be a slider for the values
