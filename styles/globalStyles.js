@@ -48,6 +48,15 @@ export default StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
+  card: {
+    padding: 2,
+    backgroundColor: "#f9f4f4",
+    padding: 10,
+    borderRadius: 30,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
 
   totalCard: {
     alignSelf: "center",
@@ -96,7 +105,7 @@ export default StyleSheet.create({
 
   totalWeight: {
     backgroundColor: "#EEEEEE",
-    width: 320,
+    width: 300,
     maxWidth: "80%",
     margin: 2,
     borderRadius: 3,
@@ -106,5 +115,23 @@ export default StyleSheet.create({
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
+  },
+  modalBody: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 30,
+  },
+  lineSeparator: {
+    borderWidth: 1,
+    borderColor: "#434A5D",
+    width: 300,
+    alignSelf: "center",
+    marginBottom: 10,
+    margin: 30,
+    backgroundColor: "#434A5D",
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
   },
 });

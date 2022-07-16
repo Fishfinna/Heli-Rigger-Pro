@@ -17,6 +17,7 @@ export default function numInput(props) {
         <TextInput
           style={styles.input}
           placeholder="0"
+          placeholderTextColor="grey"
           onChangeText={props.onChangeText ? props.onChangeText : null}
           value={props.value}
           keyboardType="numeric"

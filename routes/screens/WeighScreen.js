@@ -75,10 +75,11 @@ export default function VolumeScreen(navigation) {
           {/* content start */}
 
           {/* modal for density input */}
-          <Modal visible={modalState}>
+          <Modal animationType="slide" visible={modalState}>
             <Weight
               itemWeight={itemWeight}
               setModal={setModal}
+              onBackdropPress={() => setModalVisible(false)}
               setWeight={setWeight}
             />
           </Modal>

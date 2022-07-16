@@ -1,22 +1,19 @@
-import {
-  StyleSheet,
-  Text,
-  Keyboard,
-  View,
-  TouchableWithoutFeedback,
-  Image,
-  ScrollView,
-  RefreshControl,
-  Modal,
-} from "react-native";
+import { Text, Dimensions, View, TouchableWithoutFeedback } from "react-native";
 import styles from ".././styles/globalStyles";
 import React, { useState, useEffect } from "react";
-import { Icon, SearchBar } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import NumInput from "./numInput.js";
 import FlatButton from "./button.js";
 import { Formik, Form } from "formik";
+import { Picker } from "@react-native-picker/picker";
+import Button from "./button.js";
+import Presets from "../woodPresets";
 
 export default function Reviewform({ setModal, setWeight, itemWeight }) {
+  // picker state
+
+  const [selectedPreset, setPreset] = useState();
+
   return (
     <View style={styles.modalBody}>
       {/* return */}
@@ -28,7 +25,7 @@ export default function Reviewform({ setModal, setWeight, itemWeight }) {
       </TouchableWithoutFeedback>
 
       {/* Custom */}
-      <View style={{ backgroundColor: "#Fafafa", padding: 10 }}>
+      <View style={styles.card}>
         <Text style={styles.title}>use custom value</Text>
         <Formik
           initialValues={{
@@ -38,10 +35,6 @@ export default function Reviewform({ setModal, setWeight, itemWeight }) {
             // top custom area submit event
             setWeight({ material: "Custom", density: val.custom });
             // close the page
-
-            alert(
-              `Selected material: ${itemWeight.material}, ${itemWeight.density}kg/m`
-            );
             setModal(false);
           }}
         >
@@ -49,7 +42,7 @@ export default function Reviewform({ setModal, setWeight, itemWeight }) {
             <View>
               <NumInput
                 text="Custom Density:"
-                value={props.values.custom}
+                value={`${props.values.custom}`}
                 onChangeText={props.handleChange("custom")}
                 format="kg/m"
                 super={3}
@@ -66,18 +59,73 @@ export default function Reviewform({ setModal, setWeight, itemWeight }) {
       </View>
 
       {/* line separator */}
-      <View
-        style={{
-          borderWidth: 1,
-          borderColor: "#434A5D",
-          width: "100%",
-          marginBottom: 10,
-        }}
-      />
+      <View style={styles.lineSeparator} />
 
       {/* Preset */}
-      <Text style={styles.title}>use preset value</Text>
-      <SearchBar />
+      <View style={styles.card}>
+        <Text style={styles.title}>use preset value</Text>
+
+        {/* picker content */}
+        <Picker
+          selectedValue={JSON.stringify(selectedPreset)}
+          onValueChange={(itemValue, itemIndex) => {
+            setPreset({
+              name: JSON.parse(itemValue)["name"],
+              density: JSON.parse(itemValue)["density"],
+            });
+          }}
+          itemStyle={{
+            color: "#434A5D",
+            textAlign: "center",
+            fontWeight: "500",
+          }}
+          style={{
+            backgroundColor: "#F3EFEF",
+            borderRadius: 20,
+          }}
+        >
+          {Presets.map((preset) => {
+            // each preset is {name: "string", density: number}
+            return (
+              <Picker.Item
+                label={preset.name + ":  " + preset.density}
+                value={JSON.stringify(preset)}
+                themeVariant="dark"
+                key={
+                  preset.name +
+                  Math.random()
+                    .toString(36)
+                    .replace(/[^a-z]+/g, "")
+                    .substring(0, 5)
+                }
+              />
+            );
+          })}
+        </Picker>
+        <View style={styles.row}>
+          <Button
+            text="Set Preset"
+            onPress={
+              () => {
+                if (selectedPreset) {
+                  setWeight({
+                    material: selectedPreset.name,
+                    density: selectedPreset.density,
+                  });
+                } else {
+                  setWeight({
+                    material: Presets[0].name,
+                    density: Presets[0].density,
+                  });
+                }
+                setModal(false);
+              }
+              // close the page
+            }
+          />
+          <Button text="Edit Presets" bg="#434A5D" arrow={true} />
+        </View>
+      </View>
     </View>
   );
 }

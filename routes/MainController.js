@@ -2,17 +2,18 @@ import * as React from "react";
 import { View, Text, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Icon } from "react-native-elements";
 
 // screens
 import ConverterScreen from "./screens/ConverterScreen";
-import VolumeScreen from "./screens/VolumeScreen";
+import WeighScreen from "./screens/WeighScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 
 // Screen names
 const ConverterName = "Convert";
-const VolumeName = "Weigh";
-const SettingsName = "Settings";
+const WeighName = "Weigh";
+const SettingsName = "System";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,18 +30,43 @@ const appTheme = {
   },
 };
 
+// Weigh Stack Navigation
+const WeighStack = createStackNavigator();
+
+function WeighStackScreen() {
+  return (
+    <WeighStack.Navigator>
+      <WeighStack.Screen
+        name="Frustum"
+        component={WeighScreen}
+        options={{
+          tabBarLabel: "Frustum",
+          headerStyle: {
+            backgroundColor: "#eeee",
+            height: 30,
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            color: "#434A5D",
+          },
+        }}
+      />
+    </WeighStack.Navigator>
+  );
+}
+
 export default function MainController(props) {
   return (
     <NavigationContainer theme={appTheme}>
       <Tab.Navigator
-        initialRouteName={VolumeName}
+        initialRouteName={WeighName}
         screenOptions={({ route }) => ({
           tabBarActiveTintColor: "#F78D6C",
           tabBarInactiveTintColor: "#BBBBBB",
           tabBarLabelStyle: {
             fontSize: 10,
             fontWeight: "bold",
-            paddingBottom: 10,
+            paddingBottom: 5,
           },
           tabBarStyle: [
             {
@@ -54,7 +80,7 @@ export default function MainController(props) {
             let rn = route.name;
             let color;
 
-            if (rn === VolumeName) {
+            if (rn === WeighName) {
               iconName = focused ? "cube" : "cube-outline";
               color = focused ? "#FEA170" : "#aaaaaa";
             } else if (rn === ConverterName) {
@@ -72,7 +98,7 @@ export default function MainController(props) {
           },
         })}
       >
-        <Tab.Screen name={VolumeName} component={VolumeScreen} />
+        <Tab.Screen name={WeighName} component={WeighStackScreen} />
         <Tab.Screen name={ConverterName} component={ConverterScreen} />
         <Tab.Screen name={SettingsName} component={SettingsScreen} />
       </Tab.Navigator>

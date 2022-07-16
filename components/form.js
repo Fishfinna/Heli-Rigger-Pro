@@ -56,7 +56,7 @@ export default function Reviewform({ findNums, setModal }) {
               format="m"
             />
 
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <View style={styles.row}>
               <FlatButton text="calculate" onPress={props.handleSubmit} />
               <FlatButton
                 text="Select Density"
