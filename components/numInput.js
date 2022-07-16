@@ -32,7 +32,7 @@ export default function numInput(props) {
             </Text>
           </View>
         ) : (
-          <Text style={{ color: "grey", width: 60, lineHeight: 30 }}>
+          <Text style={{ color: "grey", minWidth: 40, lineHeight: 30 }}>
             {props.format}
           </Text>
         )}

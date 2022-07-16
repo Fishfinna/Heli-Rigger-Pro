@@ -14,44 +14,62 @@ import React, { useState, useEffect } from "react";
 import { Icon, SearchBar } from "react-native-elements";
 import NumInput from "./numInput.js";
 import FlatButton from "./button.js";
+import { Formik, Form } from "formik";
 
-export default function Reviewform({ setModal }) {
-  // delocious mini donuts, melt in your mouth, 10$
-
-  // refresh control
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 250);
-  }, []);
-
+export default function Reviewform({ setModal, setWeight, itemWeight }) {
   return (
     <View style={styles.modalBody}>
       {/* return */}
       <TouchableWithoutFeedback onPress={() => setModal(false)}>
         <View style={styles.cancel}>
-          <Icon name="arrow-back" size={40} color="#4d4d4D" type="material" />
+          <Icon name="arrow-back" size={40} color="#434A5D" type="material" />
           <Text style={styles.cancelText}> RETURN </Text>
         </View>
       </TouchableWithoutFeedback>
 
       {/* Custom */}
-      {/* line separator */}
-
-      <View style={{ backgroundColor: "#F8F5F5", padding: 10 }}>
+      <View style={{ backgroundColor: "#Fafafa", padding: 10 }}>
         <Text style={styles.title}>use custom value</Text>
-        <NumInput text="Custom Density:" value="0" format="kg/m" super={3} />
-        <FlatButton text="set custom value" width="200" alignSelf="center" />
+        <Formik
+          initialValues={{
+            custom: itemWeight.density ? itemWeight.density : "",
+          }}
+          onSubmit={(val) => {
+            // top custom area submit event
+            setWeight({ material: "Custom", density: val.custom });
+            // close the page
+
+            alert(
+              `Selected material: ${itemWeight.material}, ${itemWeight.density}kg/m`
+            );
+            setModal(false);
+          }}
+        >
+          {(props) => (
+            <View>
+              <NumInput
+                text="Custom Density:"
+                value={props.values.custom}
+                onChangeText={props.handleChange("custom")}
+                format="kg/m"
+                super={3}
+              />
+              <FlatButton
+                text="set custom value"
+                width="200"
+                alignSelf="center"
+                onPress={props.handleSubmit}
+              />
+            </View>
+          )}
+        </Formik>
       </View>
 
       {/* line separator */}
       <View
         style={{
           borderWidth: 1,
-          borderColor: "#4D4D4D",
+          borderColor: "#434A5D",
           width: "100%",
           marginBottom: 10,
         }}

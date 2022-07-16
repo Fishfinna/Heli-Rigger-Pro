@@ -5,7 +5,7 @@ export default StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flex: 1,
-    backgroundColor: "#EEEEE",
+    backgroundColor: "#FFFFF",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
@@ -38,7 +38,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 22,
+    paddingHorizontal: 12,
     borderRadius: 4,
     elevation: 3,
     fontSize: 24,
@@ -50,18 +50,21 @@ export default StyleSheet.create({
   },
 
   totalCard: {
+    alignSelf: "center",
     backgroundColor: "#EEEEEE",
-    width: 160,
-    maxWidth: "70%",
+    Width: 140,
+    minWidth: 140,
+    maxWidth: "40%",
     margin: 10,
-    color: "#333A4D",
     borderRadius: 3,
     fontSize: 14,
     fontWeight: "bold",
-    padding: 5,
+    padding: 2,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
+    height: 50,
+    overflow: "hidden",
   },
 
   subscript: {
@@ -77,7 +80,7 @@ export default StyleSheet.create({
   },
 
   cancelText: {
-    color: "#4D4D4D",
+    color: "#434A5D",
     fontSize: 20,
   },
 
@@ -85,7 +88,7 @@ export default StyleSheet.create({
     display: "flex",
     textAlign: "center",
     flexDirection: "row",
-    color: "#4D4D4D",
+    color: "#434A5D",
     fontSize: 20,
     textTransform: "uppercase",
     marginBottom: 10,
@@ -93,10 +96,9 @@ export default StyleSheet.create({
 
   totalWeight: {
     backgroundColor: "#EEEEEE",
-    width: 340,
-    maxWidth: "90%",
-    margin: 10,
-    color: "#333A4D",
+    width: 320,
+    maxWidth: "80%",
+    margin: 2,
     borderRadius: 3,
     fontSize: 14,
     fontWeight: "bold",
