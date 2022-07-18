@@ -12,7 +12,6 @@ import SettingsScreen from "./screens/SettingsScreen";
 
 // Secondary screens
 import DensityScreen from "./screens/DensityScreen";
-import CalculationsScreen from "./screens/CalculationsScreen";
 
 // main Screen names
 const ConverterName = "Convert";
@@ -51,7 +50,6 @@ function WeighStackScreen() {
     >
       <WeighStack.Screen name="Frustum" component={WeighScreen} />
       <WeighStack.Screen name="Density" component={DensityScreen} />
-      <WeighStack.Screen name="Calculations" component={CalculationsScreen} />
     </WeighStack.Navigator>
   );
 }

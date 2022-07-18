@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -19,10 +19,10 @@ export default StyleSheet.create({
     paddingLeft: 10,
   },
   input: {
-    margin: 10,
+    margin: 9,
     borderWidth: 1,
-    minWidth: 100,
-    maxWidth: 100,
+    minWidth: Dimensions.get("window").width * 0.25,
+    maxWidth: Dimensions.get("window").width * 0.25,
     borderColor: "#CCCCCC",
     padding: 10,
     fontSize: 18,
@@ -48,25 +48,23 @@ export default StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
-  card: {
+  denCard: {
     backgroundColor: "#f9f4f4",
     padding: 10,
+    marginVertical: 12,
     borderRadius: 30,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
   numCard: {
-    padding: 10,
+    padding: 5,
     backgroundColor: "#f9f4f4",
     borderRadius: 5,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    width: "45%",
-    marginTop: 10,
-    height: 100,
-    paddingTop: 25,
+    margin: 5,
   },
 
   subscript: {
@@ -114,7 +112,7 @@ export default StyleSheet.create({
     borderColor: "#CCCCCC",
     width: 300,
     alignSelf: "center",
-    margin: 15,
+    margin: 2,
     backgroundColor: "#CCCCCC",
   },
   row: {
@@ -128,17 +126,46 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-around",
-    paddingBottom: 10,
+    justifyContent: "center",
     width: "100%",
   },
   convertSelection: {
     display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    margin: 10,
-    paddingHorizontal: "15%",
-    paddingVertical: "10%",
-    backgroundColor: "#333A4D",
-    borderRadius: 5,
+    justifyContent: "space-between",
+    margin: 20,
+    backgroundColor: "#F78D6C",
+    borderRadius: 20,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowColor: "#CCCCCC",
+    shadowRadius: 2,
+  },
+  convertLabel: {
+    color: "white",
+    padding: 20,
+    fontWeight: "bold",
+  },
+  errormsg: {
+    color: "tomato",
+    fontWeight: "bold",
+    padding: 10,
+    fontSize: 12,
+  },
+  emptymsg: {
+    height: 0,
+  },
+  icon: {
+    backgroundColor: "#ffa180",
+    borderWidth: 3,
+    borderColor: "#F78D6C",
+    borderRadius: 20,
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 0,
+    padding: 20,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Text,
+  View,
+} from "react-native";
 import { Icon } from "react-native-elements";
 import styles from ".././styles/globalStyles";
 

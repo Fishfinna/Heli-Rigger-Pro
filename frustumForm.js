@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Button, TextInput, View } from "react-native";
-import styles from ".././styles/globalStyles";
-import { Formik, Form } from "formik";
+import styles from "../styles/globalStyles";
+import { Formik, Field, Form } from "formik";
 import FlatButton from "./button.js";
 import NumInput from "./numInput.js";
 import * as yup from "yup";
@@ -20,6 +20,7 @@ export default function Reviewform({ navigation, findNums, total }) {
         initialValues={{ base: "", top: "", height: "" }}
         onSubmit={(values) => {
           findNums(values);
+          navigation.navigate("Density");
         }}
         validationSchema={reviewSchema}
       >
@@ -34,8 +35,11 @@ export default function Reviewform({ navigation, findNums, total }) {
 
             <NumInput
               text="Top Diameter (d):"
-              onChangeText={props.handleChange("top")}
               value={props.values.top}
+              onChangeText={(values) => {
+                props.handleChange("top")(values);
+                console.log(values);
+              }}
               format="cm"
             />
 

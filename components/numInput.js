@@ -15,6 +15,8 @@ export default function numInput(props) {
 
       <View style={styles.inputField}>
         <TextInput
+          onBlur={props.onBlur}
+          name={props.name}
           style={styles.input}
           placeholder="0"
           placeholderTextColor="grey"
