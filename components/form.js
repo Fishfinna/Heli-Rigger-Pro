@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import * as React from "react";
 import { StyleSheet, Button, TextInput, View } from "react-native";
 import styles from ".././styles/globalStyles";
 import { Formik, Form } from "formik";
@@ -6,22 +6,12 @@ import FlatButton from "./button.js";
 import NumInput from "./numInput.js";
 import * as yup from "yup";
 
-export default function Reviewform({ findNums, setModal }) {
-  // refresh control
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 250);
-  }, []);
-
+export default function Reviewform({ navigation, findNums, total }) {
   // form control
   const reviewSchema = yup.object({
-    base: yup.number().positive().max(200).moreThan(yup.ref("top")),
-    top: yup.number().positive().max(200),
-    height: yup.number().positive().max(200),
+    base: yup.number().positive().moreThan(yup.ref("top")),
+    top: yup.number().positive(),
+    height: yup.number().positive(),
   });
 
   return (
@@ -56,15 +46,12 @@ export default function Reviewform({ findNums, setModal }) {
               format="m"
             />
 
-            <View style={styles.row}>
-              <FlatButton text="calculate" onPress={props.handleSubmit} />
-              <FlatButton
-                text="Select Density"
-                alignSelf="right"
-                arrow="Display"
-                onPress={() => (setModal ? setModal(true) : null)}
-              />
-            </View>
+            <FlatButton
+              text="Select Density"
+              width="300%"
+              arrow="Display"
+              onPress={props.handleSubmit}
+            />
           </View>
         )}
       </Formik>

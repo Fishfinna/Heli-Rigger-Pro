@@ -10,7 +10,11 @@ import ConverterScreen from "./screens/ConverterScreen";
 import WeighScreen from "./screens/WeighScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 
-// Screen names
+// Secondary screens
+import DensityScreen from "./screens/DensityScreen";
+import CalculationsScreen from "./screens/CalculationsScreen";
+
+// main Screen names
 const ConverterName = "Convert";
 const WeighName = "Weigh";
 const SettingsName = "System";
@@ -35,22 +39,19 @@ const WeighStack = createStackNavigator();
 
 function WeighStackScreen() {
   return (
-    <WeighStack.Navigator>
-      <WeighStack.Screen
-        name="Frustum"
-        component={WeighScreen}
-        options={{
-          tabBarLabel: "Frustum",
-          headerStyle: {
-            backgroundColor: "#eeee",
-            height: 30,
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            color: "#434A5D",
-          },
-        }}
-      />
+    <WeighStack.Navigator
+      screenOptions={{
+        tabBarLabel: "Frustum",
+        headerStyle: {
+          backgroundColor: "#eeee",
+          height: 30,
+        },
+        headerTintColor: "#434A5D",
+      }}
+    >
+      <WeighStack.Screen name="Frustum" component={WeighScreen} />
+      <WeighStack.Screen name="Density" component={DensityScreen} />
+      <WeighStack.Screen name="Calculations" component={CalculationsScreen} />
     </WeighStack.Navigator>
   );
 }
@@ -70,7 +71,6 @@ export default function MainController(props) {
           },
           tabBarStyle: [
             {
-              height: 55,
               paddingTop: 5,
             },
             null,
@@ -84,7 +84,7 @@ export default function MainController(props) {
               iconName = focused ? "cube" : "cube-outline";
               color = focused ? "#FEA170" : "#aaaaaa";
             } else if (rn === ConverterName) {
-              iconName = focused ? "repeat" : "repeat-outline";
+              iconName = focused ? "calculator" : "calculator-outline";
               color = focused ? "#FEA170" : "#aaaaaa";
             } else if (rn === SettingsName) {
               iconName = focused ? "settings" : "settings-outline";
