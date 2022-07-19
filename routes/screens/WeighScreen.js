@@ -48,7 +48,7 @@ export default function VolumeScreen({ navigation, route }) {
             source={require("../../assets/frustum.png")}
           />
           {/* form */}
-          <KeyboardAvoidingView>
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
             <Form navigation={navigation} findNums={findNums} />
           </KeyboardAvoidingView>
           {/* line separator */}
@@ -58,11 +58,18 @@ export default function VolumeScreen({ navigation, route }) {
             style={{
               ...styles.column,
               alignItems: "center",
+              justifyContent: "flex-start",
               marginTop: Dimensions.get("window").height * 0.02,
             }}
           >
             {/* subtitle */}
-            <Text numberOfLines={1} style={styles.subtitle}>
+            <Text
+              numberOfLines={1}
+              style={{
+                ...styles.subtitle,
+                maxWidth: Dimensions.get("window").width * 0.9,
+              }}
+            >
               {" "}
               Current Material:{" "}
               <Text style={{ color: "#F78D6C" }}>

@@ -10,6 +10,10 @@ export default function SettingsScreen({ navigation }) {
       icon: "information-circle",
     },
     {
+      name: "Help",
+      icon: "help-circle",
+    },
+    {
       name: "Manage Presets",
       icon: "pencil",
     },

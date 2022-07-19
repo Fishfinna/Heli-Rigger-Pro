@@ -2,6 +2,7 @@ import React, { useState, Component } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
   Text,
   View,
   TextInput,
@@ -10,14 +11,19 @@ import styles from ".././styles/globalStyles";
 
 export default function numInput(props) {
   return (
-    <View style={styles.forms}>
-      <Text>{props.text}</Text>
+    <View style={{ ...styles.forms, ...props.style }}>
+      <Text style={{ color: "#434A5D", fontSize: 15 }}>{props.text}</Text>
 
       <View style={styles.inputField}>
         <TextInput
           onBlur={props.onBlur}
           name={props.name}
-          style={styles.input}
+          style={{
+            ...styles.input,
+            minWidth: props.width
+              ? props.width
+              : Dimensions.get("window").width * 0.25,
+          }}
           placeholder="0"
           placeholderTextColor="grey"
           onChangeText={props.onChangeText ? props.onChangeText : null}
@@ -35,7 +41,13 @@ export default function numInput(props) {
             </Text>
           </View>
         ) : (
-          <Text style={{ color: "grey", minWidth: 40, lineHeight: 30 }}>
+          <Text
+            style={
+              props.format
+                ? { color: "grey", minWidth: 40, lineHeight: 30 }
+                : { width: 0 }
+            }
+          >
             {props.format}
           </Text>
         )}

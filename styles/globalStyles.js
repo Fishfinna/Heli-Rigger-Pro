@@ -3,20 +3,23 @@ import { StyleSheet, Dimensions } from "react-native";
 export default StyleSheet.create({
   container: {
     display: "flex",
-    alignItems: "center",
     flex: 1,
     backgroundColor: "#FFFFF",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
   },
-
+  containerUncentered: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#FFFFF",
+    width: "100%",
+  },
   forms: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingLeft: 10,
   },
   input: {
     margin: 9,
@@ -50,8 +53,8 @@ export default StyleSheet.create({
   },
   denCard: {
     backgroundColor: "#f9f4f4",
-    padding: 10,
-    marginVertical: 12,
+    width: Dimensions.get("window").width * 0.9,
+    padding: 8,
     borderRadius: 30,
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
@@ -89,7 +92,7 @@ export default StyleSheet.create({
     textAlign: "center",
     flexDirection: "row",
     color: "#434A5D",
-    fontSize: 20,
+    fontSize: 18,
     textTransform: "uppercase",
     margin: 10,
     fontWeight: "bold",
@@ -100,8 +103,8 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   densityBody: {
-    padding: 20,
-    paddingTop: 30,
+    transform: [{ scale: 0.9 }],
+    margin: -10,
     flex: 1,
     display: "flex",
     alignItems: "center",
@@ -118,6 +121,7 @@ export default StyleSheet.create({
   row: {
     display: "flex",
     flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -150,15 +154,14 @@ export default StyleSheet.create({
   errormsg: {
     color: "tomato",
     fontWeight: "bold",
-    padding: 10,
-    fontSize: 12,
+    fontSize: 11,
   },
   emptymsg: {
     height: 0,
   },
   icon: {
     backgroundColor: "#ffa180",
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: "#F78D6C",
     borderRadius: 20,
     borderBottomRightRadius: 0,
@@ -167,5 +170,25 @@ export default StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  centerScroll: {
+    display: "flex",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputColumn: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    alignItems: "flex-end",
+    backgroundColor: "#f9f4f4",
+    width: Dimensions.get("window").width * 0.9,
+    padding: 8,
+    margin: "5%",
+    borderRadius: 30,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
 });

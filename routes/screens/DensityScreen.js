@@ -10,7 +10,6 @@ import styles from "../../styles/globalStyles";
 import React, { useState, useEffect } from "react";
 import { Icon } from "react-native-elements";
 import NumInput from "../../components/numInput.js";
-import FlatButton from "../../components/button.js";
 import { Formik, Form } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import Button from "../../components/button.js";
@@ -35,7 +34,7 @@ export default function Reviewform({ navigation, route }) {
   }, [itemWeight]);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.centerScroll}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.densityBody}>
           {/* Custom */}
@@ -63,9 +62,8 @@ export default function Reviewform({ navigation, route }) {
                     format="kg/m"
                     super={3}
                   />
-                  <FlatButton
+                  <Button
                     text="use custom value"
-                    width="240"
                     alignSelf="center"
                     onPress={props.handleSubmit}
                     arrow={true}
@@ -76,7 +74,7 @@ export default function Reviewform({ navigation, route }) {
           </View>
 
           {/* line separator */}
-          <View style={styles.lineSeparator} />
+          <View style={{ ...styles.lineSeparator, margin: "4%" }} />
 
           {/* Preset */}
           <View style={styles.denCard}>
@@ -94,7 +92,7 @@ export default function Reviewform({ navigation, route }) {
               itemStyle={{
                 color: "#434A5D",
                 textAlign: "center",
-                fontWeight: "500",
+                fontWeight: "600",
                 height: "100%",
               }}
               style={{
@@ -125,7 +123,7 @@ export default function Reviewform({ navigation, route }) {
               {/* submit button */}
               <Button
                 text="Use Preset"
-                arrow={true}
+                width={Dimensions.get("window").width * 0.35}
                 onPress={() => {
                   if (selectedPreset) {
                     setWeight({
@@ -141,7 +139,11 @@ export default function Reviewform({ navigation, route }) {
                   }
                 }}
               />
-              <Button text="Edit Presets" bg="#434A5D" />
+              <Button
+                text="Edit Presets"
+                bg="#434A5D"
+                width={Dimensions.get("window").width * 0.4}
+              />
             </View>
           </View>
         </View>

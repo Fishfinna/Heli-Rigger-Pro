@@ -15,12 +15,7 @@ export default function Flatbutton(props) {
       minWidth: props.width ? parseInt(props.width) : "auto",
       maxWidth: props.width ? parseInt(props.width) : "auto",
       margin: 4,
-      alignSelf:
-        props.alignSelf == "right"
-          ? "flex-end"
-          : props.alignSelf == "center"
-          ? "center"
-          : "auto",
+      alignSelf: "center",
       borderRadius: 8,
       paddingVertical: 14,
       paddingHorizontal: 10,
@@ -28,12 +23,13 @@ export default function Flatbutton(props) {
       shadowOffset: { width: -2, height: 3 },
       shadowOpacity: 0.1,
       shadowRadius: 1,
+      ...props.style,
     },
     buttonText: {
       color: props.color ? props.color : "white",
       fontWeight: "bold",
       textTransform: "uppercase",
-      fontSize: 16,
+
       textAlign: "center",
     },
   });

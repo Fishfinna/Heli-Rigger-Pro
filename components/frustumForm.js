@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, TextInput, View, Text } from "react-native";
+import { StyleSheet, TextInput, View, Text, Dimensions } from "react-native";
 import styles from "../styles/globalStyles";
 import { Formik, Field, Form } from "formik";
 import Button from "./button.js";
@@ -28,60 +28,69 @@ export default function Reviewform({ navigation, findNums, total }) {
       >
         {(props) => (
           <View style={{ display: "flex", flexDirection: "column" }}>
-            <Text style={props.errors.base ? styles.errormsg : styles.emptymsg}>
-              {props.errors.base}
-            </Text>
-            <NumInput
-              name="base"
-              text="Base Diameter (D):"
-              onChangeText={(e) => {
-                props.handleChange("base")(e);
-                findNums({
-                  base: e,
-                  top: props.values.top,
-                  length: props.values.length,
-                });
-              }}
-              value={props.values.base}
-              format="cm"
-            />
-            <Text style={props.errors.top ? styles.errormsg : styles.emptymsg}>
-              {props.errors.top}
-            </Text>
-            <NumInput
-              text="Top Diameter (d):"
-              value={props.values.top}
-              onChangeText={(e) => {
-                props.handleChange("top")(e);
-                findNums({
-                  base: props.values.base,
-                  top: e,
-                  length: props.values.length,
-                });
-              }}
-              format="cm"
-            />
-            <Text
-              style={props.errors.length ? styles.errormsg : styles.emptymsg}
+            <View
+              style={{ paddingLeft: Dimensions.get("window").width * 0.05 }}
             >
-              {props.errors.length}
-            </Text>
-            <NumInput
-              text="Length (L):"
-              onChangeText={(e) => {
-                props.handleChange("length")(e);
-                findNums({
-                  base: props.values.base,
-                  top: props.values.top,
-                  length: e,
-                });
-              }}
-              value={props.values.length}
-              format="m"
-            />
+              <Text
+                style={props.errors.base ? styles.errormsg : styles.emptymsg}
+              >
+                {props.errors.base}
+              </Text>
+              <NumInput
+                name="base"
+                text="Base Diameter (D):"
+                onChangeText={(e) => {
+                  props.handleChange("base")(e);
+                  findNums({
+                    base: e,
+                    top: props.values.top,
+                    length: props.values.length,
+                  });
+                }}
+                value={props.values.base}
+                format="cm"
+              />
+              <Text
+                style={props.errors.top ? styles.errormsg : styles.emptymsg}
+              >
+                {props.errors.top}
+              </Text>
+              <NumInput
+                text="Top Diameter (d):"
+                value={props.values.top}
+                onChangeText={(e) => {
+                  props.handleChange("top")(e);
+                  findNums({
+                    base: props.values.base,
+                    top: e,
+                    length: props.values.length,
+                  });
+                }}
+                format="cm"
+              />
+              <Text
+                style={props.errors.length ? styles.errormsg : styles.emptymsg}
+              >
+                {props.errors.length}
+              </Text>
+              <NumInput
+                text="Length (L):"
+                onChangeText={(e) => {
+                  props.handleChange("length")(e);
+                  findNums({
+                    base: props.values.base,
+                    top: props.values.top,
+                    length: e,
+                  });
+                }}
+                value={props.values.length}
+                format="m"
+              />
+            </View>
             <Button
               text="Select Density"
-              width="300%"
+              alignSelf="center"
+              width={Dimensions.get("window").width * 0.75}
               arrow="Display"
               onPress={() => navigation.navigate("Density")}
             />

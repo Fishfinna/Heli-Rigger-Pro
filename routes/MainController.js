@@ -12,12 +12,14 @@ import SettingsScreen from "./screens/SettingsScreen";
 
 // Secondary screens
 import DensityScreen from "./screens/DensityScreen";
+import unitScreen from "./screens/unitConversion";
 
 // main Screen names
 const ConverterName = "Convert";
 const WeighName = "Weigh";
 const SettingsName = "System";
 
+// tab screen set up
 const Tab = createBottomTabNavigator();
 
 // theme
@@ -43,7 +45,6 @@ function WeighStackScreen() {
         tabBarLabel: "Frustum",
         headerStyle: {
           backgroundColor: "#eeee",
-          height: 30,
         },
         headerTintColor: "#434A5D",
       }}
@@ -51,6 +52,29 @@ function WeighStackScreen() {
       <WeighStack.Screen name="Frustum" component={WeighScreen} />
       <WeighStack.Screen name="Density" component={DensityScreen} />
     </WeighStack.Navigator>
+  );
+}
+
+// converstion stack navigation
+const ConversionStack = createStackNavigator();
+
+function ConversionStackScreen() {
+  return (
+    <ConversionStack.Navigator
+      screenOptions={{
+        tabBarLabel: "Frustum",
+        headerStyle: {
+          backgroundColor: "#eeee",
+        },
+        headerTintColor: "#434A5D",
+      }}
+    >
+      <ConversionStack.Screen
+        name="Select Converter"
+        component={ConverterScreen}
+      />
+      <ConversionStack.Screen name="Unit Converter" component={unitScreen} />
+    </ConversionStack.Navigator>
   );
 }
 
@@ -97,7 +121,7 @@ export default function MainController(props) {
         })}
       >
         <Tab.Screen name={WeighName} component={WeighStackScreen} />
-        <Tab.Screen name={ConverterName} component={ConverterScreen} />
+        <Tab.Screen name={ConverterName} component={ConversionStackScreen} />
         <Tab.Screen name={SettingsName} component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
