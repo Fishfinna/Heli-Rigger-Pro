@@ -1,58 +1,58 @@
 export default [
   {
     name: "Alder",
-    density: 420,
+    density: Math.round(420 * 2.20462),
   },
   {
     name: "Apple",
-    density: 800,
+    density: Math.round(800 * 2.20462),
   },
   {
     name: "Birch",
-    density: 650,
+    density: Math.round(650 * 2.20462),
   },
   {
     name: "Cedar",
-    density: 500,
+    density: Math.round(500 * 2.20462),
   },
   {
     name: "Cherry",
-    density: 740,
+    density: Math.round(740 * 2.20462),
   },
   {
     name: "Cypress",
-    density: 510,
+    density: Math.round(510 * 2.20462),
   },
   {
     name: "Douglas Fir",
-    density: 530,
+    density: Math.round(530 * 2.20462),
   },
   {
     name: "Elm",
-    density: 580,
+    density: Math.round(580 * 2.20462),
   },
   {
     name: "Maple",
-    density: 730,
+    density: Math.round(730 * 2.20462),
   },
   {
     name: "Oak",
-    density: 800,
+    density: Math.round(800 * 2.20462),
   },
   {
     name: "Pine",
-    density: 480,
+    density: Math.round(480 * 2.20462),
   },
   {
     name: "Redwood",
-    density: 450,
+    density: Math.round(450 * 2.20462),
   },
   {
     name: "Spruce",
-    density: 450,
+    density: Math.round(450 * 2.20462),
   },
   {
     name: "Willow",
-    density: 500,
+    density: Math.round(500 * 2.20462),
   },
 ];

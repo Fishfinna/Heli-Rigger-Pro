@@ -46,10 +46,11 @@ export default function Reviewform({ navigation, route }) {
                   typeof itemWeight !== "undefined" ? itemWeight.density : "",
               }}
               onSubmit={(val) => {
-                // top custom area submit event
+                // custom area submit event
                 setWeight({
                   material: "Custom",
-                  density: val.custom ? val.custom : "0",
+                  density:
+                    (val.custom != "") & (val.custom != ".") ? val.custom : "0",
                 });
               }}
             >
@@ -59,14 +60,13 @@ export default function Reviewform({ navigation, route }) {
                     text="Custom Density:"
                     value={`${props.values.custom}`}
                     onChangeText={props.handleChange("custom")}
-                    format="kg/m"
+                    format="lbs/m"
                     super={3}
                   />
                   <Button
                     text="use custom value"
                     alignSelf="center"
                     onPress={props.handleSubmit}
-                    arrow={true}
                   />
                 </View>
               )}
@@ -78,7 +78,27 @@ export default function Reviewform({ navigation, route }) {
 
           {/* Preset */}
           <View style={styles.denCard}>
-            <Text style={styles.title}>use preset value</Text>
+            <View
+              style={{
+                ...styles.subscript,
+                padding: 0,
+                marginHorizontal: "10%",
+                alignSelf: "center",
+              }}
+            >
+              <Text style={styles.title}>use preset value</Text>
+              <Text style={{ lineHeight: 45, color: "grey" }}>lbs/m</Text>
+              <Text
+                style={{
+                  fontSize: 8,
+                  lineHeight: 35,
+                  padding: 0,
+                  color: "grey",
+                }}
+              >
+                3
+              </Text>
+            </View>
 
             {/* picker content */}
             <Picker
@@ -143,6 +163,7 @@ export default function Reviewform({ navigation, route }) {
                 text="Edit Presets"
                 bg="#434A5D"
                 width={Dimensions.get("window").width * 0.4}
+                onPress={() => navigation.navigate("Presets")}
               />
             </View>
           </View>

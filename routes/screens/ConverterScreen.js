@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import styles from "../../styles/globalStyles";
 import { Icon } from "react-native-elements";
 import Converter from "../../components/modelConverter";
 
 export default function ConverterScreen({ navigation, route }) {
-  const [modalOpen, setModal] = useState(false);
   return (
     <View style={styles.container}>
       {/* line separator */}
@@ -53,10 +52,10 @@ export default function ConverterScreen({ navigation, route }) {
         onPress={() =>
           navigation.navigate("Unit Converter", {
             units: {
-              ml: 1,
+              mg: 1,
               g: 0.001,
               oz: 0.000035274,
-              ibs: 0.00000220462,
+              lbs: 0.00000220462,
               kg: 1 / 1000000,
               stone: 1 / 6.35e6,
             },

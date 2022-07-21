@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   Keyboard,
   View,
@@ -7,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Image,
   ScrollView,
-  RefreshControl,
   Dimensions,
   StatusBar,
 } from "react-native";
@@ -37,7 +35,7 @@ export default function VolumeScreen({ navigation, route }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <ScrollView style={{ flex: 1, marginTop: 3 }}>
-        <View style={styles.container}>
+        <View style={{ ...styles.container, paddingBottom: "5%" }}>
           <StatusBar barStyle="light-content" />
           {/* content start */}
           <Image
@@ -90,10 +88,11 @@ export default function VolumeScreen({ navigation, route }) {
 
               {/* weight (POUNDS) */}
               <Card
-                text="Weight (ibs)"
+                text="Weight (lbs)"
                 body={
                   typeof route.params != "undefined"
-                    ? volume * route.params.density.density * 2.20462
+                    ? (volume / 2.20462) *
+                      (route.params.density.density * 2.20462)
                     : 0
                 }
               />
