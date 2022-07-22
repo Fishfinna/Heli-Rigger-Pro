@@ -22,20 +22,29 @@ import { Icon } from "react-native-elements";
 import PopUp from "../../components/popUp";
 import { Formik } from "formik";
 
-export default function Presets() {
-  const [addModal, setAddModal] = useState(false);
+export default function PresetsScreen() {
+  // set up presets here
+  let [presets, setPresets] = useState(woodPresets);
 
+  // state setters
+  const [modalOpen, setModal] = useState(false);
+  const [selectedItem, setSelected] = useState({ name: "", density: "" });
   return (
     <View style={styles.presetContainer}>
       {/* add modal popup */}
-      <PopUp onPress={Keyboard.dismiss} visible={addModal}>
+      <PopUp onPress={Keyboard.dismiss} visible={modalOpen}>
         <View style={styles.popUpNotify}>
-          <Text onPress={() => setAddModal(false)}>
+          <Text onPress={() => setModal(false)}>
             <Icon name="close" size={30} color="black" />
           </Text>
 
           {/* start of form */}
-          <Formik initialValues={{ itemName: "", density: "" }}>
+          <Formik
+            initialValues={{
+              itemName: selectedItem.name,
+              density: selectedItem.density,
+            }}
+          >
             {(props) => (
               <View style={{ display: "flex", alignItems: "center" }}>
                 <Text style={{ ...styles.title, position: "relative" }}>
@@ -76,7 +85,22 @@ export default function Presets() {
                   ></TextInput>
                 </View>
 
-                <Button text="save" />
+                <Button
+                  text="save"
+                  onPress={() => {
+                    // save button set up
+
+                    setPresets([
+                      {
+                        name: props.values.itemName,
+                        density: props.values.density,
+                      },
+                      ...presets,
+                    ]);
+
+                    setModal(false);
+                  }}
+                />
               </View>
             )}
           </Formik>
@@ -87,11 +111,18 @@ export default function Presets() {
       {/* start of list */}
       <FlatList
         ListHeaderComponent={
-          <Button text="Add New Preset+" onPress={() => setAddModal(true)} />
+          <Button
+            text="Add New Preset +"
+            onPress={() => {
+              setSelected({ name: "", density: "" });
+              setModal(true);
+            }}
+          />
         }
         style={styles.presetList}
         ListFooterComponent={<View style={{ padding: "5%" }} />}
-        data={woodPresets}
+        data={presets}
+        extraData={presets}
         renderItem={({ item }) => {
           return (
             <View style={styles.PresetCard}>
@@ -132,16 +163,6 @@ export default function Presets() {
                 </View>
               </Text>
               <View style={styles.row}>
-                {/* edit */}
-                <TouchableOpacity onPress={() => console.log(item)}>
-                  <Text style={{ paddingLeft: "5%" }}>
-                    <Icon
-                      name="square-edit-outline"
-                      color="#434A5D"
-                      type="material-community"
-                    />
-                  </Text>
-                </TouchableOpacity>
                 {/* delete */}
                 <TouchableOpacity
                   onPress={() =>
@@ -154,7 +175,11 @@ export default function Presets() {
                           text: "Yes",
                           onPress: () => {
                             // delete the item here
-                            console.log(item);
+                            setPresets([
+                              ...presets.filter(
+                                (woodPreset) => woodPreset != item
+                              ),
+                            ]);
                           },
                         },
                         // The "No" button

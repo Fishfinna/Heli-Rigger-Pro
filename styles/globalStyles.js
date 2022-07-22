@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    backgroundColor: "#FFFFF",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
@@ -12,7 +12,7 @@ export default StyleSheet.create({
   containerUncentered: {
     display: "flex",
     flex: 1,
-    backgroundColor: "#FFFFF",
+    backgroundColor: "#FFFFFF",
     width: "100%",
   },
   forms: {

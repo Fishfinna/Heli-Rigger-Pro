@@ -73,7 +73,7 @@ export default function VolumeScreen({ navigation, route }) {
               <Text style={{ color: "#F78D6C" }}>
                 {typeof route.params != "undefined"
                   ? route.params.density.material
-                  : "No Material Seleted"}
+                  : "No Material Selected"}
               </Text>
             </Text>
             <View>
