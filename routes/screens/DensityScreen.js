@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import styles from "../../styles/globalStyles";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "react-native-elements";
 import NumInput from "../../components/numInput.js";
 import { Formik, Form } from "formik";
@@ -39,16 +39,37 @@ export default function Reviewform({ navigation, route }) {
   // read function
   async function readData() {
     try {
+      // await AsyncStorage.removeItem("@presets"); //commenting this line will restart the app memory
       let values = await AsyncStorage.getItem("@presets");
-      setData(JSON.parse(values) || woodPresets);
+      if (values == null) {
+        let history = await AsyncStorage.getItem("@beenSet");
+        if (history == null) {
+          await AsyncStorage.setItem("@beenSet", "set");
+          await AsyncStorage.setItem("@presets", JSON.stringify(woodPresets));
+        }
+      }
+
+      let data = JSON.parse(await AsyncStorage.getItem("@presets"));
+      if (mounted.current) {
+        setData(data);
+      }
     } catch (err) {
       console.log(err);
     }
   }
 
   // read trigger
+  const mounted = useRef(true);
   useEffect(() => {
-    readData();
+    mounted.current = true;
+
+    if (mounted.current) {
+      readData();
+    }
+
+    return () => {
+      mounted.current = false;
+    };
   }, [presetData]);
 
   return (

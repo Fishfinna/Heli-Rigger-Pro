@@ -35,7 +35,11 @@ export default function PresetsScreen() {
     try {
       let values = await AsyncStorage.getItem("@presets");
       if (values == null) {
-        await AsyncStorage.setItem("@presets", JSON.stringify(woodPresets));
+        let history = await AsyncStorage.getItem("@beenSet");
+        if (history == null) {
+          await AsyncStorage.setItem("@beenSet", "set");
+          await AsyncStorage.setItem("@presets", JSON.stringify(woodPresets));
+        }
       }
       setPresets(JSON.parse(await AsyncStorage.getItem("@presets")));
     } catch (err) {
@@ -55,12 +59,28 @@ export default function PresetsScreen() {
   }
 
   useEffect(() => {
-    updateData();
+    let isMounted = true;
+
+    if (isMounted) {
+      updateData();
+    }
+    return () => {
+      //when component unmounts, set isMounted to false
+      isMounted = false;
+    };
   }, [presets]);
 
   // read trigger
   useEffect(() => {
-    readData();
+    let isMounted = true;
+
+    if (isMounted) {
+      readData();
+    }
+    return () => {
+      //when component unmounts, set isMounted to false
+      isMounted = false;
+    };
   }, []);
 
   return (
