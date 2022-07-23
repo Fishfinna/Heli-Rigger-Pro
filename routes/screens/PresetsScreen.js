@@ -21,14 +21,48 @@ import woodPresets from "../../woodPresets";
 import { Icon } from "react-native-elements";
 import PopUp from "../../components/popUp";
 import { Formik } from "formik";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function PresetsScreen() {
   // set up presets here
-  let [presets, setPresets] = useState(woodPresets);
+  const [presets, setPresets] = useState();
 
   // state setters
   const [modalOpen, setModal] = useState(false);
   const [selectedItem, setSelected] = useState({ name: "", density: "" });
+  // read from storage
+  async function readData() {
+    try {
+      let values = await AsyncStorage.getItem("@presets");
+      if (values == null) {
+        await AsyncStorage.setItem("@presets", JSON.stringify(woodPresets));
+      }
+      setPresets(JSON.parse(await AsyncStorage.getItem("@presets")));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // update storage
+  async function updateData() {
+    try {
+      if (presets != null) {
+        await AsyncStorage.setItem("@presets", JSON.stringify(presets));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    updateData();
+  }, [presets]);
+
+  // read trigger
+  useEffect(() => {
+    readData();
+  }, []);
+
   return (
     <View style={styles.presetContainer}>
       {/* add modal popup */}
@@ -176,9 +210,7 @@ export default function PresetsScreen() {
                           onPress: () => {
                             // delete the item here
                             setPresets([
-                              ...presets.filter(
-                                (woodPreset) => woodPreset != item
-                              ),
+                              ...presets.filter((preset) => preset != item),
                             ]);
                           },
                         },

@@ -13,18 +13,18 @@ import NumInput from "../../components/numInput.js";
 import { Formik, Form } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import Button from "../../components/button.js";
-import Presets from "../../woodPresets";
+import woodPresets from "../../woodPresets";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Reviewform({ navigation, route }) {
   // picker state
-
   const [selectedPreset, setPreset] = useState();
 
   // weight controls
   const [itemWeight, setWeight] = useState();
 
   useEffect(() => {
-    // !go to next page here!
+    // go to next page here
     if (typeof itemWeight !== "undefined") {
       navigation.navigate("Frustum", {
         // item wright here is {material: string, density: num}
@@ -32,6 +32,24 @@ export default function Reviewform({ navigation, route }) {
       });
     }
   }, [itemWeight]);
+
+  // set up for reading from async storage data
+  const [presetData, setData] = useState(woodPresets);
+
+  // read function
+  async function readData() {
+    try {
+      let values = await AsyncStorage.getItem("@presets");
+      setData(JSON.parse(values) || woodPresets);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // read trigger
+  useEffect(() => {
+    readData();
+  }, [presetData]);
 
   return (
     <ScrollView contentContainerStyle={styles.centerScroll}>
@@ -121,7 +139,7 @@ export default function Reviewform({ navigation, route }) {
                 height: Dimensions.get("window").height * 0.2,
               }}
             >
-              {Presets.map((preset) => {
+              {presetData.map((preset) => {
                 // each preset is {name: "string", density: number}
                 return (
                   <Picker.Item
@@ -153,8 +171,8 @@ export default function Reviewform({ navigation, route }) {
                   } else {
                     setWeight({
                       // this will take the first value if the slider has not been slid
-                      material: Presets[0].name,
-                      density: Presets[0].density,
+                      material: presetData[0].name,
+                      density: presetData[0].density,
                     });
                   }
                 }}
