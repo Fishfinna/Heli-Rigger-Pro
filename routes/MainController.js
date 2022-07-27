@@ -17,7 +17,7 @@ import PrestsScreen from "./screens/PresetsScreen";
 
 // main Screen names
 const ConverterName = "Convert";
-const WeighName = "Weigh";
+const WeighName = "Measure";
 const SettingsName = "System";
 
 // tab screen set up
@@ -50,7 +50,7 @@ function WeighStackScreen() {
         headerTintColor: "#434A5D",
       }}
     >
-      <WeighStack.Screen name="Frustum" component={WeighScreen} />
+      <WeighStack.Screen name="Scale" component={WeighScreen} />
       <WeighStack.Screen name="Density" component={DensityScreen} />
       <WeighStack.Screen name="Presets" component={PrestsScreen} />
     </WeighStack.Navigator>

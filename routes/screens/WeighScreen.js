@@ -40,7 +40,7 @@ export default function VolumeScreen({ navigation, route }) {
           {/* content start */}
           <Image
             style={{
-              width: Dimensions.get("window").width * 0.3,
+              width: Dimensions.get("window").width * 0.26,
               height: Dimensions.get("window").width * 0.3,
             }}
             source={require("../../assets/frustum.png")}
@@ -69,7 +69,7 @@ export default function VolumeScreen({ navigation, route }) {
               }}
             >
               {" "}
-              Current Material:{" "}
+              Current Species:{" "}
               <Text style={{ color: "#F78D6C" }}>
                 {typeof route.params != "undefined"
                   ? route.params.density.material
@@ -91,8 +91,7 @@ export default function VolumeScreen({ navigation, route }) {
                 text="Weight (lbs)"
                 body={
                   typeof route.params != "undefined"
-                    ? (volume / 2.20462) *
-                      (route.params.density.density * 2.20462)
+                    ? (volume / 2.2) * (route.params.density.density * 2.2)
                     : 0
                 }
               />

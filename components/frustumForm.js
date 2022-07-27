@@ -15,7 +15,7 @@ export default function Reviewform({ navigation, findNums, total }) {
       .number(errorMSG)
       .positive(errorMSG)
       .typeError(errorMSG)
-      .max(yup.ref("base"), "Top Diameter (d) should be less than Base (D)."),
+      .max(yup.ref("base"), "Top Diameter (d) should be less than Butt (D)."),
     length: yup.number(errorMSG).typeError(errorMSG).positive(errorMSG),
   });
 
@@ -38,7 +38,7 @@ export default function Reviewform({ navigation, findNums, total }) {
               </Text>
               <NumInput
                 name="base"
-                text="Base Diameter (D):"
+                text="Butt Diameter (D):"
                 onChangeText={(e) => {
                   props.handleChange("base")(e);
                   findNums({
@@ -48,24 +48,6 @@ export default function Reviewform({ navigation, findNums, total }) {
                   });
                 }}
                 value={props.values.base}
-                format="cm"
-              />
-              <Text
-                style={props.errors.top ? styles.errormsg : styles.emptymsg}
-              >
-                {props.errors.top}
-              </Text>
-              <NumInput
-                text="Top Diameter (d):"
-                value={props.values.top}
-                onChangeText={(e) => {
-                  props.handleChange("top")(e);
-                  findNums({
-                    base: props.values.base,
-                    top: e,
-                    length: props.values.length,
-                  });
-                }}
                 format="cm"
               />
               <Text
@@ -85,6 +67,24 @@ export default function Reviewform({ navigation, findNums, total }) {
                 }}
                 value={props.values.length}
                 format="m"
+              />
+              <Text
+                style={props.errors.top ? styles.errormsg : styles.emptymsg}
+              >
+                {props.errors.top}
+              </Text>
+              <NumInput
+                text="Top Diameter (d):"
+                value={props.values.top}
+                onChangeText={(e) => {
+                  props.handleChange("top")(e);
+                  findNums({
+                    base: props.values.base,
+                    top: e,
+                    length: props.values.length,
+                  });
+                }}
+                format="cm"
               />
             </View>
             <Button

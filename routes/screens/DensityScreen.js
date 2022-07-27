@@ -26,7 +26,7 @@ export default function Reviewform({ navigation, route }) {
   useEffect(() => {
     // go to next page here
     if (typeof itemWeight !== "undefined") {
-      navigation.navigate("Frustum", {
+      navigation.navigate("Scale", {
         // item wright here is {material: string, density: num}
         density: itemWeight,
       });
@@ -71,6 +71,14 @@ export default function Reviewform({ navigation, route }) {
       mounted.current = false;
     };
   }, [presetData]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setPreset();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <ScrollView contentContainerStyle={styles.centerScroll}>

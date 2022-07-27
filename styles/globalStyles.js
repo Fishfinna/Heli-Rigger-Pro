@@ -211,6 +211,7 @@ export default StyleSheet.create({
     justifyContent: "space-between",
   },
   presetTitle: {
+    maxWidth: "80%",
     fontSize: 14,
     color: "#434A5D",
     fontWeight: "500",

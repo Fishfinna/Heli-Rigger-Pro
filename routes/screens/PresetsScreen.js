@@ -22,14 +22,31 @@ import { Icon } from "react-native-elements";
 import PopUp from "../../components/popUp";
 import { Formik } from "formik";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as yup from "yup";
 
 export default function PresetsScreen() {
   // set up presets here
   const [presets, setPresets] = useState();
 
-  // state setters
+  // state setters for the modal
   const [modalOpen, setModal] = useState(false);
-  const [selectedItem, setSelected] = useState({ name: "", density: "" });
+  const [selectedItem, setSelected] = useState({
+    name: "",
+    density: "",
+    action: "",
+  });
+
+  // modal form controller
+  const errorMSG = "must be a positive number";
+  const reviewSchema = yup.object({
+    itemName: yup.string().required("this field is required"),
+    density: yup
+      .number()
+      .typeError(errorMSG)
+      .positive(errorMSG)
+      .required("this field is required"),
+  });
+
   // read from storage
   async function readData() {
     try {
@@ -98,11 +115,50 @@ export default function PresetsScreen() {
               itemName: selectedItem.name,
               density: selectedItem.density,
             }}
+            validationSchema={reviewSchema}
+            validateOnChange={false}
+            validateOnSubmit={true}
+            onSubmit={(values) => {
+              // save button set up
+              if (selectedItem.action == "edit") {
+                setPresets(
+                  presets.map((preset, index) => {
+                    if (
+                      selectedItem.name === preset.name &&
+                      selectedItem.density === preset.density &&
+                      selectedItem.index === index
+                    ) {
+                      return {
+                        name: values.itemName,
+                        density: values.density,
+                      };
+                    } else return preset;
+                  })
+                );
+              } else {
+                setPresets([
+                  {
+                    name: values.itemName,
+                    density: values.density,
+                  },
+                  ...presets,
+                ]);
+              }
+
+              setModal(false);
+            }}
           >
             {(props) => (
               <View style={{ display: "flex", alignItems: "center" }}>
                 <Text style={{ ...styles.title, position: "relative" }}>
-                  Add Preset
+                  {selectedItem.action} Preset
+                </Text>
+                <Text
+                  style={
+                    props.errors.itemName ? styles.errormsg : styles.emptymsg
+                  }
+                >
+                  {props.errors.itemName}
                 </Text>
                 <View
                   style={{ ...styles.row, justifyContent: "space-between" }}
@@ -115,12 +171,19 @@ export default function PresetsScreen() {
                       minWidth: Dimensions.get("window").width * 0.45,
                       marginLeft: "10%",
                     }}
-                    placeholder="material name"
+                    placeholder="species name"
                     placeholderTextColor="#CCCC"
                     value={`${props.values.itemName}`}
                     onChangeText={props.handleChange("itemName")}
                   ></TextInput>
                 </View>
+                <Text
+                  style={
+                    props.errors.density ? styles.errormsg : styles.emptymsg
+                  }
+                >
+                  {props.errors.density}
+                </Text>
                 <View style={styles.row}>
                   <Text style={styles.subtitle}>Density:</Text>
 
@@ -139,22 +202,7 @@ export default function PresetsScreen() {
                   ></TextInput>
                 </View>
 
-                <Button
-                  text="save"
-                  onPress={() => {
-                    // save button set up
-
-                    setPresets([
-                      {
-                        name: props.values.itemName,
-                        density: props.values.density,
-                      },
-                      ...presets,
-                    ]);
-
-                    setModal(false);
-                  }}
-                />
+                <Button text="save" onPress={props.handleSubmit} />
               </View>
             )}
           </Formik>
@@ -168,7 +216,7 @@ export default function PresetsScreen() {
           <Button
             text="Add New Preset +"
             onPress={() => {
-              setSelected({ name: "", density: "" });
+              setSelected({ name: "", density: "", action: "add new" });
               setModal(true);
             }}
           />
@@ -177,11 +225,17 @@ export default function PresetsScreen() {
         ListFooterComponent={<View style={{ padding: "5%" }} />}
         data={presets}
         extraData={presets}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           return (
             <View style={styles.PresetCard}>
               <Text style={styles.presetTitle}>
-                <Text style={{ ...styles.title, textAlign: "left" }}>
+                <Text
+                  style={{
+                    ...styles.title,
+                    textAlign: "left",
+                  }}
+                  numberOfLines={1}
+                >
                   {item.name}
                 </Text>{" "}
                 {"\n\n"}
@@ -191,7 +245,7 @@ export default function PresetsScreen() {
                     padding: 0,
                   }}
                 >
-                  <Text style={styles.presetTitle}>
+                  <Text style={styles.presetTitle} numberOfLines={1}>
                     Density: {item.density}
                   </Text>
                   <Text
@@ -217,6 +271,27 @@ export default function PresetsScreen() {
                 </View>
               </Text>
               <View style={styles.row}>
+                {/* edit */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelected({
+                      name: item.name,
+                      density: item.density,
+                      action: "edit",
+                      index: index,
+                    });
+                    setModal(true);
+                  }}
+                >
+                  <Text>
+                    <Icon
+                      name="square-edit-outline"
+                      color="#434A5D"
+                      type="material-community"
+                    />
+                  </Text>
+                </TouchableOpacity>
+
                 {/* delete */}
                 <TouchableOpacity
                   onPress={() =>
