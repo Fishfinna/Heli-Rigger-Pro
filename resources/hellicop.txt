@@ -1,13 +1,20 @@
-weight in pounds
-set the wood to customized also enter custom
-cone use di not r
-frustum
-##heli rigger pro##
+-> For the file sharing
 
-also do the trucated hollow
+-project name [enter on send]
+-user name (your name) [enter on send]
+-location [enter on send]
+-with each record send:
+    -top, length, bottom, species/density, weight, volume, time [saved automatically]
 
-top and buttom in cm
-height in meters
+-let them choose to download it as a text file with formatting, email it, or text it to another person.
+
+data should be saved every time the calculation runs. 
+make it so the list items can be deleted.
 
 
-they could be a slider for the values
+Overview:
+User enters data. 
+Data shows up on record page. 
+user can select items they want to share or delete them.
+Then user selects how they want to send the data.
+User enters the information and hits send.

@@ -14,23 +14,93 @@ import styles from "../../styles/globalStyles";
 import React, { useState, useEffect } from "react";
 import Card from "../../components/numCard";
 import Button from "../../components/button";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function VolumeScreen({ navigation, route }) {
   // form input processing
   const [volume, setVolume] = useState(0);
+  const [formData, setFormData] = useState({ base: 0, top: 0, length: 0 });
+
   const findNums = (nums) => {
     setVolume(() => {
       if (nums.base > 0 && nums.top > 0 && nums.length > 0) {
+        setFormData(nums);
         let R = nums.base / 2;
         let r = nums.top / 2;
         let h = nums.length * 100;
 
-        return ((1 / 3) * Math.PI * h * (r * r + R * R + r * R)) / 1000000; //we divide by 1000000 to get it out of cm and to meters
+        let volume =
+          ((1 / 3) * Math.PI * h * (r * r + R * R + r * R)) / 1000000; //we divide by 1000000 to get it out of cm and to meters
+        // return the volume
+        return volume;
       } else {
         return 0;
       }
     });
   };
+
+  //define the function for storing data
+  async function setData(dataObject) {
+    try {
+      //read the data
+      let storedValue = JSON.parse(await AsyncStorage.getItem("@history"));
+      if (storedValue == null) {
+        storedValue = Array();
+      }
+
+      //append the new object
+      storedValue.push(dataObject);
+      await AsyncStorage.setItem("@history", JSON.stringify(storedValue));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // record date object
+  const recordData = () => {
+    if (
+      route.params &&
+      formData.base > 0 &&
+      formData.top > 0 &&
+      formData.length > 0 &&
+      parseInt(formData.base) >= parseInt(formData.top)
+    ) {
+      let date = new Date();
+      // here we make an object with the data we need to log for later
+      let recordObject = {
+        butt: formData.base,
+        length: formData.length,
+        top: formData.top,
+        species: route.params.density.material,
+        density: route.params.density.density,
+        time:
+          date.toDateString() + " " + date.getHours() + ":" + date.getMinutes(),
+        volume: volume,
+        weight: (volume / 2.2) * (route.params.density.density * 2.2),
+      };
+      //save the data to async storage
+      setData(recordObject);
+    }
+  };
+
+  // record log on set data change
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      if (!navigation.canGoBack()) {
+        recordData();
+      }
+    });
+    return unsubscribe;
+  });
+
+  //record log when the keyboard goes down
+  useEffect(() => {
+    const keyboardState = Keyboard.addListener("keyboardDidHide", () => {
+      recordData();
+    });
+
+    return () => keyboardState;
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

@@ -5,7 +5,6 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   FlatList,
-  Image,
   ScrollView,
   TextInput,
   Dimensions,

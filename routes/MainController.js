@@ -9,6 +9,7 @@ import { Icon } from "react-native-elements";
 import ConverterScreen from "./screens/ConverterScreen";
 import WeighScreen from "./screens/WeighScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import RecordScreen from "./screens/RecordScreen";
 
 // Secondary screens
 import DensityScreen from "./screens/DensityScreen";
@@ -19,6 +20,7 @@ import PrestsScreen from "./screens/PresetsScreen";
 const ConverterName = "Convert";
 const WeighName = "Measure";
 const SettingsName = "System";
+const RecordName = "Record";
 
 // tab screen set up
 const Tab = createBottomTabNavigator();
@@ -100,6 +102,25 @@ function SystemStackScreen() {
   );
 }
 
+// calculation history stack
+const RecordStack = createStackNavigator();
+
+function RecordStackScreen() {
+  return (
+    <RecordStack.Navigator
+      screenOptions={{
+        tabBarLabel: "Record",
+        headerStyle: {
+          backgroundColor: "#eeee",
+        },
+        headerTintColor: "#434A5D",
+      }}
+    >
+      <RecordStack.Screen name="Calculation Record" component={RecordScreen} />
+    </RecordStack.Navigator>
+  );
+}
+
 export default function MainController(props) {
   return (
     <NavigationContainer theme={appTheme}>
@@ -133,6 +154,9 @@ export default function MainController(props) {
             } else if (rn === SettingsName) {
               iconName = focused ? "settings" : "settings-outline";
               color = focused ? "#FEA170" : "#aaaaaa";
+            } else if (rn === RecordName) {
+              iconName = focused ? "file-tray-full" : "file-tray-full-outline";
+              color = focused ? "#FEA170" : "#aaaaaa";
             }
             return (
               <Text>
@@ -143,6 +167,7 @@ export default function MainController(props) {
         })}
       >
         <Tab.Screen name={WeighName} component={WeighStackScreen} />
+        <Tab.Screen name={RecordName} component={RecordStackScreen} />
         <Tab.Screen name={ConverterName} component={ConversionStackScreen} />
         <Tab.Screen name={SettingsName} component={SystemStackScreen} />
       </Tab.Navigator>
