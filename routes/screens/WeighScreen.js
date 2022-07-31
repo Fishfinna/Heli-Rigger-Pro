@@ -42,15 +42,22 @@ export default function VolumeScreen({ navigation, route }) {
   //define the function for storing data
   async function setData(dataObject) {
     try {
+      //uncomment the following line to wipe the data
+      // await AsyncStorage.setItem("@history", "");
+
       //read the data
       let storedValue = JSON.parse(await AsyncStorage.getItem("@history"));
+
       if (storedValue == null) {
         storedValue = Array();
       }
 
-      //append the new object
-      storedValue.push(dataObject);
-      await AsyncStorage.setItem("@history", JSON.stringify(storedValue));
+      //make sure the data is original
+      if (!JSON.stringify(storedValue).includes(JSON.stringify(dataObject))) {
+        //append the new object
+        storedValue.unshift(dataObject);
+        await AsyncStorage.setItem("@history", JSON.stringify(storedValue));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -63,7 +70,8 @@ export default function VolumeScreen({ navigation, route }) {
       formData.base > 0 &&
       formData.top > 0 &&
       formData.length > 0 &&
-      parseInt(formData.base) >= parseInt(formData.top)
+      parseInt(formData.base) >= parseInt(formData.top) &&
+      volume > 0
     ) {
       let date = new Date();
       // here we make an object with the data we need to log for later

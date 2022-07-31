@@ -15,6 +15,8 @@ export default function Flatbutton(props) {
       minWidth: props.width ? parseInt(props.width) : "auto",
       maxWidth: props.width ? parseInt(props.width) : "auto",
       margin: 4,
+      minHeight: props.height ? props.height : "auto",
+      maxHeight: props.height ? props.height : "auto",
       alignSelf: "center",
       borderRadius: 8,
       paddingVertical: 14,
@@ -37,7 +39,7 @@ export default function Flatbutton(props) {
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View style={styles.button}>
-        <Text style={styles.buttonText}>
+        <Text style={{ ...styles.buttonText, ...props.textStyle }}>
           {props.text}{" "}
           {props.arrow ? (
             <Icon
