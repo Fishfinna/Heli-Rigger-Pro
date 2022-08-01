@@ -1,4 +1,15 @@
 {
   "spellright.language": ["en"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext", "javascript"]
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext",
+    "javascript",
+    "Log"
+  ],
+  "spellright.parserByClass": {
+    "Log": {
+      "parser": "plain"
+    }
+  }
 }

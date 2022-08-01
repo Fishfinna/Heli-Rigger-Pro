@@ -82,7 +82,11 @@ export default function VolumeScreen({ navigation, route }) {
         species: route.params.density.material,
         density: route.params.density.density,
         time:
-          date.toDateString() + " " + date.getHours() + ":" + date.getMinutes(),
+          date.toDateString() +
+          " " +
+          date.getHours() +
+          ":" +
+          ("0" + current_date.getMinutes()).slice(-2),
         volume: volume,
         weight: (volume / 2.2) * (route.params.density.density * 2.2),
       };

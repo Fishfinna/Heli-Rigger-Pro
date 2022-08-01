@@ -15,6 +15,9 @@ import RecordScreen from "./screens/RecordScreen";
 import DensityScreen from "./screens/DensityScreen";
 import unitScreen from "./screens/unitConversion";
 import PrestsScreen from "./screens/PresetsScreen";
+import SelectShareScreen from "./screens/SelectShareScreen";
+import ShareDataScreen from "./screens/ShareDataScreen";
+import ViewDocument from "./screens/ViewDocument";
 
 // main Screen names
 const ConverterName = "Convert";
@@ -59,7 +62,7 @@ function WeighStackScreen() {
   );
 }
 
-// converstion stack navigation
+// conversion stack navigation
 const ConversionStack = createStackNavigator();
 
 function ConversionStackScreen() {
@@ -102,7 +105,7 @@ function SystemStackScreen() {
   );
 }
 
-// calculation history stack
+// report history stack
 const RecordStack = createStackNavigator();
 
 function RecordStackScreen() {
@@ -116,7 +119,10 @@ function RecordStackScreen() {
         headerTintColor: "#434A5D",
       }}
     >
-      <RecordStack.Screen name="Calculation Record" component={RecordScreen} />
+      <RecordStack.Screen name="Calculation History" component={RecordScreen} />
+      <RecordStack.Screen name="Share Data" component={ShareDataScreen} />
+      <RecordStack.Screen name="Share Options" component={SelectShareScreen} />
+      <RecordStack.Screen name="View Document" component={ViewDocument} />
     </RecordStack.Navigator>
   );
 }

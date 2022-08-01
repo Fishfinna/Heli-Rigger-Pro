@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   Text,
-  Keyboard,
   View,
-  TouchableWithoutFeedback,
   TouchableOpacity,
   FlatList,
-  TextInput,
   Dimensions,
-  StatusBar,
   Alert,
 } from "react-native";
 import styles from "../../styles/globalStyles";
@@ -68,6 +64,7 @@ export default function RecordScreen({ navigation, route }) {
 
   useEffect(() => {
     const data = navigation.addListener("focus", () => {
+      setRecordData();
       readHistory();
     });
     return data;
@@ -150,6 +147,25 @@ export default function RecordScreen({ navigation, route }) {
               arrow={true}
               width={Dimensions.get("window").width * 0.92}
               text="Share selected"
+              onPress={() => {
+                if (selectedList.length > 0) {
+                  let currentList = selectedList;
+                  setList([]);
+                  navigation.navigate("Share Data", {
+                    shareData: currentList,
+                  });
+                } else {
+                  Alert.alert(
+                    "Selected Data Required",
+                    "No selected data found, please add items from the list below that you wish to share.",
+                    [
+                      {
+                        text: "return",
+                      },
+                    ]
+                  );
+                }
+              }}
             />
           </View>
         }

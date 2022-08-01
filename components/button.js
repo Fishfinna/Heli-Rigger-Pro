@@ -43,10 +43,10 @@ export default function Flatbutton(props) {
           {props.text}{" "}
           {props.arrow ? (
             <Icon
-              name="chevron-right"
+              name="arrow-forward-outline"
               size={15}
               color="white"
-              type="material"
+              type="ionicon"
             />
           ) : (
             ""

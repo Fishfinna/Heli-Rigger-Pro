@@ -254,4 +254,11 @@ export default StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
   },
+  shareDataForm: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    maxWidth: "100%",
+    width: "100%",
+  },
 });
