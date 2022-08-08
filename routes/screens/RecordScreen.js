@@ -23,6 +23,17 @@ export default function RecordScreen({ navigation, route }) {
   const [defaultSelect, setDefaultSelect] = useState(false);
   const [selectedList, setList] = useState([]);
 
+  //auto saving
+  const [autoSave, setAutoSave] = useState(async () => {
+    let valid = await AsyncStorage.getItem("@auto");
+    if (valid == null) {
+      valid = "enable";
+      await AsyncStorage.setItem("@auto", valid);
+    }
+
+    return valid;
+  });
+
   async function readHistory() {
     // read record from memory
     try {
@@ -42,7 +53,11 @@ export default function RecordScreen({ navigation, route }) {
         (item) => JSON.stringify(item) != JSON.stringify(data)
       );
       setRecordData(updatedList);
-      await AsyncStorage.setItem("@history", JSON.stringify(updatedList));
+      try {
+        await AsyncStorage.setItem("@history", JSON.stringify(updatedList));
+      } catch (error) {
+        console.log(error);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -53,6 +68,7 @@ export default function RecordScreen({ navigation, route }) {
     try {
       dataList == null ? (dataList = []) : null;
       await AsyncStorage.setItem("@history", JSON.stringify(dataList));
+      setSelectAll("Select All");
       setList([]);
       setDefaultSelect(false);
       setRecordData();
@@ -64,6 +80,9 @@ export default function RecordScreen({ navigation, route }) {
 
   useEffect(() => {
     const data = navigation.addListener("focus", () => {
+      setList([]);
+      setDefaultSelect(false);
+      setSelectAll("Select All");
       setRecordData();
       readHistory();
     });
@@ -81,92 +100,170 @@ export default function RecordScreen({ navigation, route }) {
       <FlatList
         ListEmptyComponent={
           // this will be rendered when the list is empty
-          <Text style={styles.subtitle}>
-            Scale Calculations results will be saved here automatically when
-            values are entered.
-          </Text>
+          <View style={{ padding: 10 }}>
+            <Text style={styles.subtitle}>
+              Scale Calculation results will be saved here automatically when
+              values are entered. A maximum of 100 values can be stored at once.
+            </Text>
+          </View>
         }
         ListHeaderComponent={
-          <View style={{ marginBottom: 20 }}>
-            <View style={styles.row}>
-              <Button
-                width={Dimensions.get("window").width * 0.4}
-                text={selectAll}
-                onPress={() => {
-                  if (selectAll == "Select All") {
-                    setSelectAll("Deselect All");
-                    setDefaultSelect(true);
-                    setList(recordData);
-                  } else {
-                    setSelectAll("Select All");
-                    setDefaultSelect(false);
-                    setList([]);
-                  }
-                }}
-              />
-              <Button
-                textStyle={{ overflow: "hidden" }}
-                width={Dimensions.get("window").width * 0.5}
-                text="delete selected"
-                bg="#434A5D"
-                onPress={() => {
-                  Alert.alert(
-                    "Are your sure?",
-                    "Are you sure you want to delete these items? Deleted data can not be restored.",
-                    [
-                      // The "Yes" button
-                      {
-                        text: "Yes",
-                        onPress: () => {
-                          // delete the item here
-                          setDefaultSelect(false);
+          <View
+            style={{ marginBottom: 20, display: "flex", alignItems: "center" }}
+          >
+            {/* line separator */}
+            <View
+              style={{
+                ...styles.lineSeparator,
+                width: "100%",
+                borderBottomColor: "#DEDEDE",
+                marginVertical: "2%",
+              }}
+            />
 
-                          let update = recordData.filter(
-                            (record) =>
-                              !JSON.stringify(selectedList).includes(
-                                JSON.stringify(record)
-                              )
-                          );
-
-                          updateItems(update);
-                          setList([]);
-                          setDefaultSelect(false);
-                        },
-                      },
-                      // The "No" button
-                      // Does nothing but dismiss the dialog when tapped
-                      {
-                        text: "No",
-                      },
-                    ]
-                  );
-                }}
-              />
-            </View>
+            {/* auto save button */}
             <Button
-              arrow={true}
+              style={{ margin: 10 }}
               width={Dimensions.get("window").width * 0.92}
-              text="Share selected"
-              onPress={() => {
-                if (selectedList.length > 0) {
-                  let currentList = selectedList;
-                  setList([]);
-                  navigation.navigate("Share Data", {
-                    shareData: currentList,
-                  });
+              text={
+                autoSave == "disable"
+                  ? "Enable AutoSaving"
+                  : "Disable AutoSaving"
+              }
+              bg={autoSave == "disable" ? null : "#434A5D"}
+              onPress={async () => {
+                if (autoSave == "disable") {
+                  setAutoSave("enable");
+                  await AsyncStorage.setItem("@auto", "enable");
                 } else {
-                  Alert.alert(
-                    "Selected Data Required",
-                    "No selected data found, please add items from the list below that you wish to share.",
-                    [
-                      {
-                        text: "return",
-                      },
-                    ]
-                  );
+                  setAutoSave("disable");
+                  await AsyncStorage.setItem("@auto", "disable");
                 }
               }}
             />
+
+            {/* line separator */}
+            <View style={styles.lineSeparator} />
+
+            {recordData && recordData.length ? (
+              <View>
+                <Button
+                  style={{ margin: 10 }}
+                  arrow={true}
+                  width={Dimensions.get("window").width * 0.92}
+                  text="Share selected"
+                  onPress={() => {
+                    if (selectedList.length > 0) {
+                      let currentList = selectedList;
+                      setList([]);
+                      navigation.navigate("Share Data", {
+                        shareData: currentList,
+                      });
+                    } else {
+                      Alert.alert(
+                        "Selected Data Required",
+                        "No selected data found, please add items from the list below that you wish to share.",
+                        [
+                          {
+                            text: "return",
+                          },
+                        ]
+                      );
+                    }
+                  }}
+                />
+
+                <View style={styles.lineSeparator} />
+
+                <View style={styles.row}>
+                  <Button
+                    width={Dimensions.get("window").width * 0.4}
+                    text={selectAll}
+                    onPress={() => {
+                      if (selectAll == "Select All") {
+                        setSelectAll("Deselect All");
+                        setDefaultSelect(true);
+                        setList(recordData);
+                      } else {
+                        setSelectAll("Select All");
+                        setDefaultSelect(false);
+                        setList([]);
+                      }
+                    }}
+                  />
+                  <Button
+                    textStyle={{ overflow: "hidden" }}
+                    width={Dimensions.get("window").width * 0.5}
+                    text="delete selected"
+                    bg="#434A5D"
+                    onPress={() => {
+                      Alert.alert(
+                        "Are your sure?",
+                        "Are you sure you want to delete these items? Deleted data can not be restored.",
+                        [
+                          // The "Yes" button
+                          {
+                            text: "Yes",
+                            onPress: () => {
+                              // delete the item here
+                              setDefaultSelect(false);
+
+                              let update = recordData.filter(
+                                (record) =>
+                                  !JSON.stringify(selectedList).includes(
+                                    JSON.stringify(record)
+                                  )
+                              );
+
+                              updateItems(update);
+                              setList([]);
+                              setDefaultSelect(false);
+                            },
+                          },
+                          // The "No" button
+                          // Does nothing but dismiss the dialog when tapped
+                          {
+                            text: "No",
+                          },
+                        ]
+                      );
+                    }}
+                  />
+                </View>
+
+                <Button
+                  textStyle={{ overflow: "hidden" }}
+                  width={Dimensions.get("window").width * 0.92}
+                  text="delete all"
+                  bg="#434A5D"
+                  onPress={() => {
+                    Alert.alert(
+                      "Are your sure?",
+                      "Are you sure you want to delete these items? Deleted data can not be restored.",
+                      [
+                        // The "Yes" button
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            // delete the item here
+                            setDefaultSelect(false);
+
+                            updateItems([]);
+                            setList([]);
+                            setDefaultSelect(false);
+                          },
+                        },
+                        // The "No" button
+                        // Does nothing but dismiss the dialog when tapped
+                        {
+                          text: "No",
+                        },
+                      ]
+                    );
+                  }}
+                />
+              </View>
+            ) : null}
           </View>
         }
         style={styles.presetList}
@@ -181,7 +278,6 @@ export default function RecordScreen({ navigation, route }) {
                 size={25}
                 fillColor="#F78D6C"
                 unfillColor="transparent"
-                text={"Select"}
                 textStyle={{
                   textDecorationLine: "none",
                   color: "#434A5D",

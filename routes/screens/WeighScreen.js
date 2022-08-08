@@ -56,6 +56,10 @@ export default function VolumeScreen({ navigation, route }) {
       if (!JSON.stringify(storedValue).includes(JSON.stringify(dataObject))) {
         //append the new object
         storedValue.unshift(dataObject);
+
+        //slice to be a max of 50
+        storedValue.length > 100 ? (storedValue.length = 100) : storedValue;
+
         await AsyncStorage.setItem("@history", JSON.stringify(storedValue));
       }
     } catch (err) {
@@ -64,8 +68,16 @@ export default function VolumeScreen({ navigation, route }) {
   }
 
   // record date object
-  const recordData = () => {
+  const recordData = async () => {
+    let valid = await AsyncStorage.getItem("@auto");
+
+    if (valid == null) {
+      valid = "enable";
+      await AsyncStorage.setItem("@auto", valid);
+    }
+
     if (
+      valid == "enable" &&
       route.params &&
       formData.base > 0 &&
       formData.top > 0 &&
@@ -86,7 +98,7 @@ export default function VolumeScreen({ navigation, route }) {
           " " +
           date.getHours() +
           ":" +
-          ("0" + current_date.getMinutes()).slice(-2),
+          ("0" + date.getMinutes()).slice(-2),
         volume: volume,
         weight: (volume / 2.2) * (route.params.density.density * 2.2),
       };

@@ -41,7 +41,7 @@ export default function SettingsScreen({ navigation }) {
             <Text style={styles.title}>About</Text>
             {"\n\n"}
             Heli Rigger Pro is an industrial calculator for the efficient
-            measuring and weighing of lumber. {"\n\n\n"}
+            measuring and weighing of timber. {"\n\n\n"}
             Created with the use of React Native code architectures, 2022.
           </Text>
         </View>
@@ -56,13 +56,18 @@ export default function SettingsScreen({ navigation }) {
 
           <Text style={{ padding: 10 }}>
             <Text style={styles.title}>help</Text>
-            {"\n\n"}
-            Measure: This section contains Frustum Scale calculations. Please
-            specify the length(m), base(cm), and top(cm) diameter of your
-            object, then select a density you wish to apply. {"\n\n"}
-            Convert: This section will automatically convert values between
-            units. {"\n\n"}
-            For Technical Assistance, please email shanti.steingagnon@gmail.com.
+            <Text style={{ fontSize: 12 }}>
+              {"\n\n"}
+              Measure: This section contains Frustum Scale calculations. Please
+              specify the length(m), base(cm), and top(cm) diameter of your
+              object, then select a density you wish to apply. {"\n\n"}
+              Record: This section contains past recordings and offers ways of
+              sharing report documents.
+              {"\n\n"}Convert: This section will automatically convert values
+              between units. {"\n\n"}
+              For Technical Assistance, please email
+              shanti.steingagnon@gmail.com.
+            </Text>
           </Text>
         </View>
       </PopUp>
