@@ -11,10 +11,8 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-import Form from "../../components/frustumForm.js";
 import styles from "../../styles/globalStyles";
 import React, { useState, useEffect } from "react";
-import Card from "../../components/numCard";
 import Button from "../../components/button";
 import woodPresets from "../../woodPresets";
 import { Icon } from "react-native-elements";

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Heli-Rigger-Pro",
     "slug": "Heli-Rigger-Pro",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,17 +16,23 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1",
+      "buildNumber": "2",
       "supportsTablet": true,
-      "bundleIdentifier": "com.shantisteingagnon.heli-rigger-pro"
+      "bundleIdentifier": "com.fakeData.fake"
     },
     "android": {
-      "package": "com.shantisteingagnon.heli_rigger_pro",
-      "versionCode": 1,
+      "package": "com.fakeData.fake",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "READ_CALENDAR",
+        "READ_CONTACTS",
+        "READ_EXTERNAL_STORAGE",
+        "READ_PHONE_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

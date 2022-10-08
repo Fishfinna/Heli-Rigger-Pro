@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 import Button from "../../components/button";
 import styles from "../../styles/globalStyles";
-import { Icon } from "react-native-elements";
 import * as MailComposer from "expo-mail-composer";
 
 export default function ViewDocument({ navigation, route }) {

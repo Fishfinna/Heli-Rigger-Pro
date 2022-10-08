@@ -13,7 +13,6 @@ import Form from "../../components/frustumForm.js";
 import styles from "../../styles/globalStyles";
 import React, { useState, useEffect } from "react";
 import Card from "../../components/numCard";
-import Button from "../../components/button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function VolumeScreen({ navigation, route }) {
@@ -30,7 +29,7 @@ export default function VolumeScreen({ navigation, route }) {
         let h = nums.length * 100;
 
         let volume =
-          ((1 / 3) * Math.PI * h * (r * r + R * R + r * R)) / 1000000; //we divide by 1000000 to get it out of cm and to meters
+          ((1 / 3) * Math.PI * h * (r * r + R * R + r * R)) / 1000000; //we divide by 1000000 to get it out of cm and to meters.
         // return the volume
         return volume;
       } else {
@@ -159,6 +158,7 @@ export default function VolumeScreen({ navigation, route }) {
               numberOfLines={1}
               style={{
                 ...styles.subtitle,
+                fontSize: 14,
                 maxWidth: Dimensions.get("window").width * 0.9,
               }}
             >

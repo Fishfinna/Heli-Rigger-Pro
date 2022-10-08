@@ -87,13 +87,26 @@ export default function Reviewform({ navigation, findNums, total }) {
                 format="cm"
               />
             </View>
-            <Button
-              text="Select Density"
-              alignSelf="center"
-              width={Dimensions.get("window").width * 0.75}
-              arrow="Display"
-              onPress={() => navigation.navigate("Density")}
-            />
+
+            <View style={styles.row}>
+              <Button
+                text="Select Density"
+                arrow="Display"
+                onPress={() => navigation.navigate("Density")}
+              />
+              <Button
+                text="Clear"
+                bg="#434A5D"
+                onPress={() => {
+                  props.resetForm();
+                  findNums({
+                    base: 0,
+                    top: 0,
+                    length: 0,
+                  });
+                }}
+              />
+            </View>
           </View>
         )}
       </Formik>
