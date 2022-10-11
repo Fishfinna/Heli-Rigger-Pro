@@ -56,7 +56,7 @@ export default function VolumeScreen({ navigation, route }) {
         //append the new object
         storedValue.unshift(dataObject);
 
-        //slice to be a max of 50
+        //slice to be a max of 100
         storedValue.length > 100 ? (storedValue.length = 100) : storedValue;
 
         await AsyncStorage.setItem("@history", JSON.stringify(storedValue));
